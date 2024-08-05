@@ -21,7 +21,7 @@ This application is built using Laravel v11 and Livewire v3, with Jetstream for 
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/your-username/your-laravel-app.git
+    git clone https://github.com/aqibhussain441/livewire-crud.git
     cd your-laravel-app
     ```
 
