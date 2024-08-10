@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Posts\PostManager;
+use App\Livewire\Admin\Posts\PostManager;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

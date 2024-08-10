@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Livewire\Posts;
+namespace App\Livewire\Admin\Categories;
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
-class PostList extends Component
+class CategoryList extends Component
 {
     use WithPagination;
 
-    public int|null $deleteUserId;
+    public int|null $deleteModelId;
 
     #[Url(as: 'search', except: '')]
     public string|null $searchQuery = '';
@@ -21,11 +21,11 @@ class PostList extends Component
         $this->resetPage();
     }
     #[Computed]
-    public function posts()
+    public function categories()
     {
-        return \App\Models\Post::query()
+        return \App\Models\ProductCategory::query()
             ->when($this->searchQuery, function ($query) {
-                return $query->where('title', 'like', '%' . $this->searchQuery . '%');
+                return $query->where('name', 'like', '%' . $this->searchQuery . '%');
             })
             ->latest()
             ->paginate(5);
@@ -33,6 +33,6 @@ class PostList extends Component
 
     public function render()
     {
-        return view('livewire.posts.post-list');
+        return view('livewire.admin.categories.category-list');
     }
 }

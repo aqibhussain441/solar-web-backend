@@ -1,11 +1,11 @@
-<div x-data x-on:refresh-posts-list.window="$wire.set('deleteUserId', null);$wire.$refresh();">
+<div x-data x-on:refresh-posts-list.window="$wire.set('deleteModelId', null);$wire.$refresh();">
     <div class="flex justify-between items-center py-4">
         <h2 class="text-2xl">Posts</h2>
         {{-- Search filter start --}}
         <div class="relative w-64">
             <x-input type="text" placeholder="Search..." wire:model.live="searchQuery" />
         </div>
-        <livewire:posts.save-post />
+        <livewire:admin.posts.save-post />
     </div>
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
 
@@ -37,7 +37,7 @@
                                 wire:loading.attr="disabled">
                                 {{ __('Edit') }}
                             </x-button>
-                            <x-danger-button type="button" wire:click="$set('deleteUserId', {{ $post->id }})"
+                            <x-danger-button type="button" wire:click="$set('deleteModelId', {{ $post->id }})"
                                 wire:loading.attr="disabled">
                                 {{ __('Delete') }}
                             </x-danger-button>
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <x-dialog-modal wire:model.live="deleteUserId">
+    <x-dialog-modal wire:model.live="deleteModelId">
         <x-slot name="title">
             {{ __('Delete Post') }}
         </x-slot>
@@ -63,11 +63,11 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-secondary-button wire:click="$set('deleteUserId', null)" wire:loading.attr="disabled">
+            <x-secondary-button wire:click="$set('deleteModelId', null)" wire:loading.attr="disabled">
                 {{ __('Cancel') }}
             </x-secondary-button>
 
-            <x-danger-button class="ms-3" wire:click="$dispatch('delete-post', { id: {{ $deleteUserId }} })"
+            <x-danger-button class="ms-3" wire:click="$dispatch('delete-post', { id: {{ $deleteModelId }} })"
                 wire:loading.attr="disabled">
                 {{ __('Delete') }}
             </x-danger-button>

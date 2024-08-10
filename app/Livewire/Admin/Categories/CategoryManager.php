@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Posts;
+namespace App\Livewire\Admin\Categories;
 
 use App\Models\Post;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class PostManager extends Component
+class CategoryManager extends Component
 {
     #[On('delete-post')]
     public function deletePost($id)
@@ -31,6 +31,6 @@ class PostManager extends Component
 
     public function render()
     {
-        return view('livewire.posts.post-manager');
+        return view('livewire.admin.categories.category-manager');
     }
 }
