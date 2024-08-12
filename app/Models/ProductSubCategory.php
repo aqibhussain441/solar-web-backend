@@ -20,7 +20,8 @@ class ProductSubCategory extends Model
         'is_active',
         'image',
         'details',
-        // Relations
+        'thumbnail',
+        'slug',
         'product_category_id',
     ];
 

@@ -14,7 +14,7 @@ class ProductCategory extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'is_active', 'image', 'details', 'add_in_footer'];
+    protected $fillable = ['name', 'slug', 'is_active', 'image', 'thumbnail', 'details', 'add_in_footer'];
 
     /**
      * The attributes that should be cast to native types.

@@ -1,46 +1,55 @@
 <?php
 
-namespace App\Livewire\Admin\Categories;
+namespace App\Livewire\Admin\SubCategories;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
-use App\Livewire\Forms\ProductCategoryForm;
 use Livewire\WithFileUploads;
+use App\Models\ProductCategory;
+use App\Livewire\Forms\ProductSubCategoryForm;
+use Illuminate\Support\Collection;
 
-class SaveCategory extends Component
+class SaveSubCategory extends Component
 {
 
     use WithFileUploads;
-    public bool $showProductCategoryFormModal = false;
+    public bool $showProductSubCategoryFormModal = false;
 
     public string $operation = '';
 
-    public ProductCategoryForm $form;
+    public ProductSubCategoryForm $form;
 
-    #[On('create-product-category')]
+    public array|null|Collection $categories;
+
+    public function mount()
+    {
+        $this->categories = ProductCategory::pluck('name', 'id');
+    }
+
+    #[On('create-product-sub-category')]
     public function createProductCategory()
     {
         $this->resetErrorBag();
         $this->operation = 'create';
-        $this->form->initializeForm(new \App\Models\ProductCategory());
-        $this->showProductCategoryFormModal = true;
+        $this->form->initializeForm(new \App\Models\ProductSubCategory());
+        $this->showProductSubCategoryFormModal = true;
     }
 
-    #[On('edit-product-category')]
+    #[On('edit-product-sub-category')]
     public function editProductCategory($id)
     {
         $this->resetErrorBag();
         $this->operation = 'edit';
-        $category = \App\Models\ProductCategory::find($id);
+        $category = \App\Models\ProductSubCategory::find($id);
         $this->form->initializeForm($category);
-        $this->showProductCategoryFormModal = true;
+        $this->showProductSubCategoryFormModal = true;
     }
 
     public function save()
     {
         $this->form->save();
-        $this->showProductCategoryFormModal = false;
-        $this->dispatch('refresh-product-category-list');
+        $this->showProductSubCategoryFormModal = false;
+        $this->dispatch('refresh-product-sub-category-list');
         $this->dispatch('toast', type: 'success', message: 'Product Category saved successfully.');
     }
 
@@ -58,6 +67,6 @@ class SaveCategory extends Component
     }
     public function render()
     {
-        return view('livewire.admin.categories.save-category');
+        return view('livewire.admin.sub-categories.save-sub-category');
     }
 }

@@ -1,6 +1,10 @@
 import "./bootstrap";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
+import 'quill/dist/quill.snow.css';
+import Quill from 'quill';
+
+window.Quill = Quill;
 
 document.addEventListener("livewire:init", () => {
     Livewire.on("toast", (event) => {

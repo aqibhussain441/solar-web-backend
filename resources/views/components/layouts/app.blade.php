@@ -13,6 +13,11 @@
 
     <!-- Styles -->
     @livewireStyles
+    <style>
+        .ql-editor {
+            min-height: 400px !important;
+        }
+    </style>
 </head>
 
 <body class="font-sans antialiased">

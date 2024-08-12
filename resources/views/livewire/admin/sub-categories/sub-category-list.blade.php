@@ -1,11 +1,11 @@
-<div x-data x-on:refresh-product-category-list.window="$wire.set('deleteModelId', null);$wire.$refresh();">
+<div x-data x-on:refresh-product-sub-category-list.window="$wire.set('deleteModelId', null);$wire.$refresh();">
     <div class="flex justify-between items-center py-4">
-        <h2 class="text-2xl">Categories</h2>
+        <h2 class="text-2xl">Sub Categories</h2>
         {{-- Search filter start --}}
         <div class="relative w-64">
             <x-input type="text" placeholder="Search..." wire:model.live="searchQuery" />
         </div>
-        <livewire:admin.categories.save-category />
+        <livewire:admin.sub-categories.save-sub-category />
     </div>
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
 
@@ -20,7 +20,7 @@
             </thead>
             <tbody>
 
-                @foreach ($this->categories as $category)
+                @foreach ($this->subCategories as $category)
                     <tr wire:key='{{ $category->id }}' class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row"
                             class="p-2 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -35,7 +35,7 @@
 
                         <td class="p-2">
                             <x-button type="button"
-                                @click="$dispatch('edit-product-category', { id: {{ $category->id }} })"
+                                @click="$dispatch('edit-product-sub-category', { id: {{ $category->id }} })"
                                 wire:loading.attr="disabled">
                                 {{ __('Edit') }}
                             </x-button>
@@ -50,7 +50,7 @@
             </tbody>
         </table>
         <div class=" border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-            {{ $this->categories->links() }}
+            {{ $this->subCategories->links() }}
         </div>
     </div>
 

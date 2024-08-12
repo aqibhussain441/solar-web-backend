@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductCategory;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductCategory>
  */
-class ProductCategoryFactory extends Factory
+class ProductSubCategoryFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,17 +19,21 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         $name = $this->faker->sentence;
-        $image_path = config('constants.product.category.image_path');
-        $thumbnail_path = config('constants.product.category.thumbnail_path');
+        $image_path = config('constants.product.subcategory.image_path');
+        $thumbnail_path = config('constants.product.subcategory.thumbnail_path');
 
         // Ensure the directories exist
         $this->ensureDirectoryExists(storage_path('app/public/' . $image_path));
         $this->ensureDirectoryExists(storage_path('app/public/' . $thumbnail_path));
 
+        $category = ProductCategory::pluck('id');
+        $category_id = $category->random();
+
         return [
             'name' => $name,
             'slug' => Str::slug($name),
             'is_active' => $this->faker->boolean(90),
+            'product_category_id' => $category_id,
             'image' => $image_path . $this->faker->image(
                 dir: storage_path('app/public/' . $image_path),
                 fullPath: false,
@@ -44,7 +49,7 @@ class ProductCategoryFactory extends Factory
                 height: round(480 / 3)
             ),
             'details' => $this->faker->paragraph,
-            'add_in_footer' => $this->faker->boolean(50),
+            // 'add_in_footer' => $this->faker->boolean(50),
         ];
     }
 

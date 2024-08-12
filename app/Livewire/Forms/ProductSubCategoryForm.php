@@ -4,7 +4,7 @@ namespace App\Livewire\Forms;
 
 use Livewire\Form;
 use Livewire\WithFileUploads;
-use App\Models\ProductCategory;
+use App\Models\ProductSubCategory;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\File;
@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
-class ProductCategoryForm extends Form
+class ProductSubCategoryForm extends Form
 {
     use WithFileUploads;
-    public ?ProductCategory $category;
+    public ?ProductSubCategory $category;
 
     #[Locked]
     public int|null $id;
@@ -28,27 +28,36 @@ class ProductCategoryForm extends Form
 
     public null|bool $is_active = true;
 
-    public null|bool $add_in_footer = false;
+    public null|int $product_category_id;
 
     public TemporaryUploadedFile|string|null $image;
 
     public function rules()
     {
+        // 'name',
+        // 'is_active',
+        // 'image',
+        // 'details',
+        // 'thumbnail',
+        // 'slug',
+        // 'product_category_id',
         return [
             'name' => [
                 'required',
                 'min:5',
                 'max:255',
-                Rule::unique(ProductCategory::class)->ignore($this->category),
+                Rule::unique(ProductSubCategory::class)->ignore($this->category),
             ],
             'slug' => [
                 'required',
                 'min:5',
                 'max:255',
-                Rule::unique(ProductCategory::class)->ignore($this->category),
+                Rule::unique(ProductSubCategory::class)->ignore($this->category),
             ],
+            'is_active' => 'required|boolean',
             'details' => 'required|min:5',
             'image' => 'required',
+            'product_category_id' => 'required|exists:product_categories,id',
         ];
     }
 
@@ -56,17 +65,17 @@ class ProductCategoryForm extends Form
     {
         $this->image = null;
     }
-    public function initializeForm(ProductCategory $category)
+    public function initializeForm(ProductSubCategory $category)
     {
         $this->category = $category;
-        $this->fill($category->only('id', 'image', 'name', 'slug', 'details'));
+        $this->fill($category->only('id', 'image', 'product_category_id', 'name', 'slug', 'details'));
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->category->fill($this->only('name', 'slug', 'details'));
+        $this->category->fill($this->only('name', 'product_category_id', 'slug', 'details'));
 
         if ($this->image instanceof TemporaryUploadedFile) {
             if ($this->category->image) {
@@ -74,23 +83,23 @@ class ProductCategoryForm extends Form
                 Storage::disk('public')->delete($this->category->thumbnail);
             }
 
-            $imageDirectory = storage_path('app/public/' . config('constants.product.category.image_path'));
+            $imageDirectory = storage_path('app/public/' . config('constants.product.subcategory.image_path'));
 
             // Ensure the directory exists
             if (!File::exists($imageDirectory)) {
                 File::makeDirectory($imageDirectory, 0755, true);
             }
 
-            $imagePath = $this->image->store(config('constants.product.category.image_path'), 'public');
+            $imagePath = $this->image->store(config('constants.product.subcategory.image_path'), 'public');
 
-            $thumbnailDirectory = storage_path('app/public/' . config('constants.product.category.thumbnail_path'));
+            $thumbnailDirectory = storage_path('app/public/' . config('constants.product.subcategory.thumbnail_path'));
 
             // Ensure the directory exists
             if (!File::exists($thumbnailDirectory)) {
                 File::makeDirectory($thumbnailDirectory, 0755, true);
             }
 
-            $thumbnailPath = config('constants.product.category.thumbnail_path') . $this->image->hashName();
+            $thumbnailPath = config('constants.product.subcategory.thumbnail_path') . $this->image->hashName();
             $thumbnailImage = Image::read($this->image->getRealPath())->scale(50);
 
             Storage::disk('public')->put($thumbnailPath, (string) $thumbnailImage->encode());
@@ -100,6 +109,6 @@ class ProductCategoryForm extends Form
         }
 
         $this->category->save();
-        $this->reset(['name', 'slug', 'details', 'image']);
+        $this->reset(['name', 'product_category_id', 'slug', 'details', 'image']);
     }
 }

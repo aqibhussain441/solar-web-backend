@@ -16,7 +16,7 @@
                 <x-label for="title" value="{{ __('Title') }}" />
                 <x-input type="text"
                     class="block w-full px-3 py-2 text-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
-                    placeholder="{{ __('Title') }}" wire:model.live="form.title" />
+                    placeholder="{{ __('Title') }}" wire:model.blur="form.title" />
                 <x-input-error for="title" class="mt-2" />
                 <x-input-error for="form.title" class="mt-2" />
             </div>
@@ -24,7 +24,7 @@
                 <x-label for="slug" value="{{ __('Slug') }}" />
                 <x-input type="text"
                     class="block w-full px-3 py-2 text-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
-                    placeholder="{{ __('Slug') }}" wire:model.live="form.slug" />
+                    placeholder="{{ __('Slug') }}" wire:model.blur="form.slug" />
                 <x-input-error for="slug" class="mt-2" />
                 <x-input-error for="form.slug" class="mt-2" />
             </div>

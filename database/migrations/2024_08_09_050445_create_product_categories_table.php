@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_categories', function (Blueprint $table) {
-            //  Category name, active/inactive, image, category details, add in footer checkbox
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
             $table->boolean('is_active')->default(true);
             $table->string('image')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->longText('details')->nullable();
             $table->boolean('add_in_footer')->default(false);
             $table->timestamps();

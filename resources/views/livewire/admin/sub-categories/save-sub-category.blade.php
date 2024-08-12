@@ -1,13 +1,13 @@
 <div>
-    <x-button type="button" @click="$dispatch('create-product-category')" wire:loading.attr="disabled">
+    <x-button type="button" @click="$dispatch('create-product-sub-category')" wire:loading.attr="disabled">
         {{ __('Add new') }}
     </x-button>
-    <x-dialog-modal wire:model.live="showProductCategoryFormModal" maxWidth='2xl'>
+    <x-dialog-modal wire:model.live="showProductSubCategoryFormModal" maxWidth='2xl'>
         <x-slot name="title">
             @if ($operation === 'create')
-                {{ __('Create a new category') }}
+                {{ __('Create a new sub category') }}
             @else
-                {{ __('Edit category') }}
+                {{ __('Edit sub category') }}
             @endif
         </x-slot>
 
@@ -29,6 +29,18 @@
                 <x-input-error for="form.slug" class="mt-2" />
             </div>
             <div class="mt-4">
+                <x-label for="product_category_id" value="{{ __('Parent Category') }}" />
+                <select wire:model="form.product_category_id"
+                    class="border-gray-300 focus:border-indigo-500  block w-full px-3 py-2 text-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500">
+                    <option value="">{{ __('Select parent category') }}</option>
+                    @foreach ($categories as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                    @endforeach
+                </select>
+                <x-input-error for="product_category_id" class="mt-2" />
+                <x-input-error for="form.product_category_id" class="mt-2" />
+            </div>
+            <div class="mt-4">
                 <x-file-input type="text" name="image" removeMethod="removeImage"
                     class="block w-full px-3 py-2 text-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
                     placeholder="{{ __('Slug') }}" wire:model="form.image" />
@@ -42,7 +54,7 @@
         </x-slot>
 
         <x-slot name="footer">
-            <x-secondary-button wire:click.prevent="$toggle('showProductCategoryFormModal')"
+            <x-secondary-button wire:click.prevent="$toggle('showProductSubCategoryFormModal')"
                 wire:loading.attr="disabled">
                 {{ __('Cancel') }}
             </x-secondary-button>

@@ -2,30 +2,34 @@
 
 namespace App\Livewire\Admin\Categories;
 
-use App\Models\Post;
-use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use App\Models\ProductCategory;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryManager extends Component
 {
-    #[On('delete-post')]
-    public function deletePost($id)
+    #[On('delete-product-category')]
+    public function deleteProductCategory($id)
     {
-        $post = Post::find($id);
+        $productCategory = ProductCategory::find($id);
 
-        if (!$post) {
-            $this->dispatch('refresh-posts-list');
-            $this->dispatch('toast', type: 'error', message: 'Post not found!');
+        if (!$productCategory) {
+            $this->dispatch('refresh-product-category-list');
+            $this->dispatch('toast', type: 'error', message: 'Category not found!');
             return;
         }
+        if ($productCategory->image) {
+            Storage::disk('public')->delete($productCategory->image);
+            Storage::disk('public')->delete($productCategory->thumbnail);
+        }
+        $productCategory->delete();
 
-        $post->delete();
-
-        $this->dispatch('refresh-posts-list');
+        $this->dispatch('refresh-product-category-list');
         $this->dispatch(
             'toast',
             type: 'success',
-            message: 'Post deleted successfully!'
+            message: 'Category deleted successfully!'
         );
     }
 
