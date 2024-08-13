@@ -16,12 +16,18 @@ class ProductTypeSectionAttribute extends Model
         'name',
         'type',
         'options',
-        'required',
+        'is_required',
         'is_active',
         'order',
         'default_value',
     ];
 
+    protected function casts()
+    {
+        return [
+            'options' => 'array',
+        ];
+    }
     public function productTypeSection(): BelongsTo
     {
         return $this->belongsTo(ProductTypeSection::class);

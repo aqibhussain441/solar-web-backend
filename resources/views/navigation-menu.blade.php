@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class=" mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
@@ -31,6 +31,30 @@
                         {{ __('Product sub categories') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link wire:navigate href="{{ route('product.groups') }}" :active="request()->routeIs('product.groups')">
+                        {{ __('Product groups') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link wire:navigate href="{{ route('product.types') }}" :active="request()->routeIs('product.types')">
+                        {{ __('Product types') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link wire:navigate href="{{ route('product.typeSections') }}" :active="request()->routeIs('product.typeSections')">
+                        {{ __('Product type sections') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link wire:navigate href="{{ route('product.typeSectionAttributes') }}" :active="request()->routeIs('product.typeSectionAttributes')">
+                        {{ __('Section attributes') }}
+                    </x-nav-link>
+                </div>
+
+
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

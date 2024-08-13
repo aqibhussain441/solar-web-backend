@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +29,10 @@ class Product extends Model
         'description',
     ];
 
+    public function scopeActive($query): Builder
+    {
+        return $query->where('is_active', true);
+    }
     public function subCategory(): BelongsTo
     {
         return $this->belongsTo(ProductSubCategory::class);

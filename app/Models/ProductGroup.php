@@ -18,7 +18,12 @@ class ProductGroup extends Model
     protected $fillable = [
         'name',
         'order',
+        'slug',
         'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     public function products(): BelongsToMany
