@@ -3,6 +3,7 @@
 use App\Livewire\Admin\Categories\CategoryManager;
 use App\Livewire\Admin\Groups\GroupManager;
 use App\Livewire\Admin\Posts\PostManager;
+use App\Livewire\Admin\Products\ProductManager;
 use App\Livewire\Admin\SectionAttributes\SectionAttributeManager;
 use App\Livewire\Admin\SubCategories\SubCategoryManager;
 use App\Livewire\Admin\Types\TypeManager;
@@ -21,11 +22,12 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/posts', PostManager::class)->name('posts');
-    Route::get('/product-categories', CategoryManager::class)->name('product.categories');
-    Route::get('/product-sub-categories', SubCategoryManager::class)->name('product.subCategories');
-    Route::get('/product-groups', GroupManager::class)->name('product.groups');
-    Route::get('/product-types', TypeManager::class)->name('product.types');
-    Route::get('/product-type-sections', TypeSectionManager::class)->name('product.typeSections');
-    Route::get('/type-section-attributes', SectionAttributeManager::class)->name('product.typeSectionAttributes');
+    Route::get('/posts', PostManager::class)->name('posts')->lazy();
+    Route::get('/product-categories', CategoryManager::class)->name('product.categories')->lazy();
+    Route::get('/product-sub-categories', SubCategoryManager::class)->name('product.subCategories')->lazy();
+    Route::get('/product-groups', GroupManager::class)->name('product.groups')->lazy();
+    Route::get('/product-types', TypeManager::class)->name('product.types')->lazy();
+    Route::get('/product-type-sections', TypeSectionManager::class)->name('product.typeSections')->lazy();
+    Route::get('/type-section-attributes', SectionAttributeManager::class)->name('product.typeSectionAttributes')->lazy();
+    Route::get('/products', ProductManager::class)->name('products')->lazy();
 });

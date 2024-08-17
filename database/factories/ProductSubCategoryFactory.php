@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\ProductCategory;
 use Illuminate\Support\Str;
+use App\Models\ProductCategory;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -61,8 +62,8 @@ class ProductSubCategoryFactory extends Factory
      */
     private function ensureDirectoryExists(string $directory)
     {
-        if (!\File::exists($directory)) {
-            \File::makeDirectory($directory, 0755, true);
+        if (!File::exists($directory)) {
+            File::makeDirectory($directory, 0755, true);
         }
     }
 }

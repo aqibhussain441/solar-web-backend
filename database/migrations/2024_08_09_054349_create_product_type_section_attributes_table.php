@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('product_type_section_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(ProductTypeSection::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(ProductTypeSection::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('type')->default('text');
             $table->json('options')->nullable(); // For dropdown, radio, checkbox

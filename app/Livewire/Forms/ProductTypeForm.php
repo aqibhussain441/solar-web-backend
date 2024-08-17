@@ -20,6 +20,8 @@ class ProductTypeForm extends Form
 
     public string|null $description = '';
 
+    public null|bool $is_active = false;
+
     public function rules()
     {
         return [
@@ -36,6 +38,7 @@ class ProductTypeForm extends Form
                 Rule::unique(ProductType::class)->ignore($this->type),
             ],
             'description' => 'required|min:5',
+            'is_active' => 'required|bool',
         ];
     }
 
@@ -44,15 +47,16 @@ class ProductTypeForm extends Form
     {
         $this->type = $type;
         $this->fill($type->only('id', 'name', 'slug', 'description'));
+        $this->is_active = $type->is_active ?? false;
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->type->fill($this->only('name', 'slug', 'description'));
+        $this->type->fill($this->only('name', 'slug', 'description', 'is_active'));
 
         $this->type->save();
-        $this->reset(['name', 'slug', 'description']);
+        $this->reset(['name', 'slug', 'description', 'is_active']);
     }
 }

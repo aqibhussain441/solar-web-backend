@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,10 +21,6 @@ class ProductCategoryFactory extends Factory
         $name = $this->faker->sentence;
         $image_path = config('constants.product.category.image_path');
         $thumbnail_path = config('constants.product.category.thumbnail_path');
-
-        // Ensure the directories exist
-        $this->ensureDirectoryExists(storage_path('app/public/' . $image_path));
-        $this->ensureDirectoryExists(storage_path('app/public/' . $thumbnail_path));
 
         return [
             'name' => $name,
@@ -46,18 +43,5 @@ class ProductCategoryFactory extends Factory
             'details' => $this->faker->paragraph,
             'add_in_footer' => $this->faker->boolean(50),
         ];
-    }
-
-    /**
-     * Ensure that a directory exists.
-     *
-     * @param string $directory
-     * @return void
-     */
-    private function ensureDirectoryExists(string $directory)
-    {
-        if (!\File::exists($directory)) {
-            \File::makeDirectory($directory, 0755, true);
-        }
     }
 }

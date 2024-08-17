@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\TypeSections;
 
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use App\Models\ProductType;
 use Livewire\Attributes\On;
@@ -17,11 +18,10 @@ class SaveTypeSection extends Component
 
     public ProductTypeSectionForm $form;
 
-    public array|null $types;
-
-    public function mount()
+    #[Computed]
+    public function types(): array
     {
-        $this->types = ProductType::pluck('name', 'id')->toArray();
+        return ProductType::active()->pluck('name', 'id')->toArray();
     }
 
     #[On('create-product-type-section')]

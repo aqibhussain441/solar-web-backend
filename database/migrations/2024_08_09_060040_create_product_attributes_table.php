@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Product::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(ProductTypeSectionAttribute::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductTypeSectionAttribute::class)->constrained()->cascadeOnDelete();
             $table->longText('value');
             $table->timestamps();
         });

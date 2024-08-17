@@ -16,7 +16,7 @@ class PostForm extends Form
     #[Locked]
     public int|null $id;
 
-    public string|null $name = '';
+    public string|null $title = '';
 
     public string|null $slug = '';
 
@@ -25,11 +25,11 @@ class PostForm extends Form
     public function rules()
     {
         return [
-            'name' => [
+            'title' => [
                 'required',
                 'min:5',
                 'max:255',
-                // The name must be unique in the posts table, excluding the current post if editing.
+                // The title must be unique in the posts table, excluding the current post if editing.
                 Rule::unique('posts')->ignore($this->post),
             ],
             'slug' => [
@@ -46,13 +46,13 @@ class PostForm extends Form
     public function initializeForm(Post $post)
     {
         $this->post = $post;
-        $this->fill($post->only('id', 'name', 'slug', 'body'));
+        $this->fill($post->only('id', 'title', 'slug', 'body'));
     }
 
     public function save()
     {
         $this->validate();
-        $this->post->fill($this->only('name', 'slug', 'body'));
+        $this->post->fill($this->only('title', 'slug', 'body'));
         $this->post->save();
         $this->reset();
     }

@@ -46,7 +46,7 @@
                                     class="object-cover w-full h-24 rounded">
                             @else
                                 <div class="flex items-center justify-center w-full h-24 bg-gray-100 rounded">
-                                    <x-file-icon />
+                                    Upload
                                 </div>
                             @endif
                             @if ($removeMethod)
@@ -60,11 +60,11 @@
                 @endforeach
                 <div class="w-1/4 mb-4">
                     <div x-data="{}">
-                        <button wire:loading.attr='disabled' @click="$refs.profilephoto.click()" type="button"
+                        <button wire:loading.attr='disabled' @click="$refs.fileinput.click()" type="button"
                             class="w-full py-2 px-4 bg-blue-500 text-white text-lg font-medium rounded hover:bg-blue-600">
-                            <i class="fa fa-upload" aria-hidden="true"></i>
+                            Upload
                         </button>
-                        <input type="file" x-ref="profilephoto" {{ $disabled ? 'disabled' : '' }}
+                        <input type="file" x-ref="fileinput" {{ $disabled ? 'disabled' : '' }}
                             {!! $attributes->merge(['class' => $class, 'id' => $name]) !!}>
                         <div x-show="uploading" class="mt-2">
                             <div class="relative pt-1">
@@ -107,7 +107,7 @@
                                 class="object-cover w-full h-24 rounded">
                         @else
                             <div class="flex items-center justify-center w-full h-24 bg-gray-100 rounded">
-                                <x-file-icon />
+                                Upload
                             </div>
                         @endif
                         @if ($removeMethod)
@@ -122,12 +122,11 @@
         @else
             <div class="w-1/4 mb-4">
                 <div x-data="{}">
-                    <button wire:loading.attr='disabled' @click="$refs.profilephoto.click()" type="button"
+                    <button wire:loading.attr='disabled' @click="$refs.fileinput.click()" type="button"
                         class="w-full py-2 px-4 bg-blue-500 text-white text-lg font-medium rounded hover:bg-blue-600">
                         Upload
                     </button>
-                    <input type="file" x-ref="profilephoto" {{ $disabled ? 'disabled' : '' }}
-                        {!! $attributes->merge(['class' => $class, 'id' => $name]) !!}>
+                    <input type="file" x-ref="fileinput" {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => $class, 'id' => $name]) !!}>
 
                     <div x-show="uploading" class="mt-2">
                         <div class="relative pt-1">

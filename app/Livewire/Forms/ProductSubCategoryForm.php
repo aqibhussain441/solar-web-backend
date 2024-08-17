@@ -34,13 +34,6 @@ class ProductSubCategoryForm extends Form
 
     public function rules()
     {
-        // 'name',
-        // 'is_active',
-        // 'image',
-        // 'details',
-        // 'thumbnail',
-        // 'slug',
-        // 'product_category_id',
         return [
             'name' => [
                 'required',
@@ -69,13 +62,14 @@ class ProductSubCategoryForm extends Form
     {
         $this->category = $category;
         $this->fill($category->only('id', 'image', 'product_category_id', 'name', 'slug', 'details'));
+        $this->is_active = $category->is_active ?? false;
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->category->fill($this->only('name', 'product_category_id', 'slug', 'details'));
+        $this->category->fill($this->only('name', 'product_category_id', 'slug', 'details', 'is_active'));
 
         if ($this->image instanceof TemporaryUploadedFile) {
             if ($this->category->image) {

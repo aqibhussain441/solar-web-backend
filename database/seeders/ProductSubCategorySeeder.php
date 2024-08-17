@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProductSubCategory;
+use Log;
 use Illuminate\Database\Seeder;
+use App\Models\ProductSubCategory;
 use Illuminate\Support\Facades\File;
 
 class ProductSubCategorySeeder extends Seeder
@@ -20,7 +21,7 @@ class ProductSubCategorySeeder extends Seeder
 
         if (!$image_path || !$thumbnail_path) {
             // Log an error or handle the case where paths are not defined
-            \Log::error('Image path or thumbnail path not defined in config.');
+            Log::error('Image path or thumbnail path not defined in config.');
             return;
         }
 
@@ -42,7 +43,7 @@ class ProductSubCategorySeeder extends Seeder
                 File::makeDirectory($directory, 0755, true);
             } catch (\Exception $e) {
                 // Log the error or handle the exception
-                \Log::error('Failed to create directory: ' . $directory . ' Error: ' . $e->getMessage());
+                Log::error('Failed to create directory: ' . $directory . ' Error: ' . $e->getMessage());
             }
         }
     }

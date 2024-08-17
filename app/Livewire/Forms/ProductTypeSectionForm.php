@@ -24,6 +24,8 @@ class ProductTypeSectionForm extends Form
 
     public null|int $product_type_id;
 
+    public bool $is_active = false;
+
     public function rules()
     {
         return [
@@ -38,7 +40,8 @@ class ProductTypeSectionForm extends Form
             'product_type_id' => [
                 'required',
                 Rule::exists(ProductType::class, 'id'),
-            ]
+            ],
+            'is_active' => 'required|boolean',
         ];
     }
 
@@ -46,15 +49,16 @@ class ProductTypeSectionForm extends Form
     {
         $this->typeSection = $typeSection;
         $this->fill($typeSection->only('id', 'order', 'name', 'description', 'product_type_id'));
+        $this->is_active = $typeSection->is_active ?? false;
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->typeSection->fill($this->only('name', 'description', 'order', 'product_type_id'));
+        $this->typeSection->fill($this->only('name', 'description', 'order', 'product_type_id', 'is_active'));
 
         $this->typeSection->save();
-        $this->reset(['name', 'description', 'order', 'product_type_id']);
+        $this->reset(['name', 'description', 'order', 'product_type_id', 'is_active']);
     }
 }

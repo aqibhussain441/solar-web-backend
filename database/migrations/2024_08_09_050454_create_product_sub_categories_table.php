@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('product_sub_categories', function (Blueprint $table) {
             // Category name, active/inactive, image, category details
             $table->id();
-            $table->foreignIdFor(ProductCategory::class)->constrained();
+            $table->foreignIdFor(ProductCategory::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique(); // Optional: for SEO-friendly URLs
             $table->boolean('is_active')->default(true);

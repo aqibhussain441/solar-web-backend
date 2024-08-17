@@ -49,6 +49,7 @@ class ProductCategoryForm extends Form
             ],
             'details' => 'required|min:5',
             'image' => 'required',
+            'is_active' => 'required|boolean',
         ];
     }
 
@@ -60,13 +61,14 @@ class ProductCategoryForm extends Form
     {
         $this->category = $category;
         $this->fill($category->only('id', 'image', 'name', 'slug', 'details'));
+        $this->is_active = $category->is_active ?? false;
     }
 
     public function save()
     {
         $this->validate();
 
-        $this->category->fill($this->only('name', 'slug', 'details'));
+        $this->category->fill($this->only('name', 'slug', 'details', 'is_active'));
 
         if ($this->image instanceof TemporaryUploadedFile) {
             if ($this->category->image) {

@@ -39,9 +39,11 @@ class ProductTypeSectionAttributeForm extends Form
                 'required',
                 'min:5',
                 'max:255',
-                Rule::unique(ProductTypeSectionAttribute::class)->ignore($this->typeSectionAttribute),
+                Rule::unique(ProductTypeSectionAttribute::class)
+                    ->where('product_type_section_id', $this->product_type_section_id)
+                    ->ignore($this->typeSectionAttribute),
             ],
-            'type' =>  'required',
+            'type' => 'required',
             'options' => [
                 'nullable',
                 function ($attribute, $value, $fail) {
@@ -49,7 +51,6 @@ class ProductTypeSectionAttributeForm extends Form
                     if (in_array($this->type, ['checkbox', 'dropdown', 'radio']) && empty($value)) {
                         $fail('The options field is required when type is checkbox, dropdown, or radio.');
                     }
-                    //
                 }
             ],
             'is_required' => 'nullable|boolean',
@@ -87,6 +88,7 @@ class ProductTypeSectionAttributeForm extends Form
             ]
         ];
     }
+
 
 
     public function initializeForm(ProductTypeSectionAttribute $typeSectionAttribute)

@@ -14,16 +14,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            // Name, Category, Price, Dimensions (length, width, height, weight, area coverage)(String type use all), Images, Product Type, Active/Inactive, Checkbox: latest, Description and details
             $table->id();
-            $table->foreignIdFor(ProductSubCategory::class)->constrained();
-            $table->foreignIdFor(ProductType::class)->constrained();
+            $table->foreignIdFor(ProductSubCategory::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProductType::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('slug')->unique();
             $table->decimal('price', 10, 2);
             $table->string('dimensions')->nullable();
             $table->decimal('weight', 10, 2)->nullable();
-            $table->string('images')->nullable();
+            $table->string('main_image')->nullable();
+            $table->string('main_thumbnail')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('show_latest')->default(false);
             $table->longText('description')->nullable();

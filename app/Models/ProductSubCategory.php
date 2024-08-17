@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProductSubCategory extends Model
 {
@@ -25,8 +26,17 @@ class ProductSubCategory extends Model
         'product_category_id',
     ];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
     public function category(): BelongsTo
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
+    }
+
+    public function scopeActive($query): Builder
+    {
+        return $query->where('is_active', true);
     }
 }

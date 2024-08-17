@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\Admin\SubCategories;
+namespace App\Livewire\Admin\Products;
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
-class SubCategoryList extends Component
+class ProductList extends Component
 {
     use WithPagination;
 
@@ -21,20 +21,18 @@ class SubCategoryList extends Component
         $this->resetPage();
     }
     #[Computed]
-    public function subCategories()
+    public function products()
     {
-        return \App\Models\ProductSubCategory::query()
-            ->with('category:id,name')
+        return \App\Models\Product::query()
             ->when($this->searchQuery, function ($query) {
                 return $query->where('name', 'like', '%' . $this->searchQuery . '%');
             })
             ->latest()
-            // ->get()->dd()
-            ->paginate(5);
+            ->paginate(20);
     }
 
     public function render()
     {
-        return view('livewire.admin.sub-categories.sub-category-list');
+        return view('livewire.admin.products.product-list');
     }
 }

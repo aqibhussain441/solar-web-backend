@@ -1,6 +1,6 @@
 <div x-data x-on:refresh-product-type-section-list.window="$wire.set('deleteModelId', null);$wire.$refresh();">
     <div class="flex justify-between items-center py-4">
-        <h2 class="text-2xl">Categories</h2>
+        <h2 class="text-2xl">Product Type Sections</h2>
         {{-- Search filter start --}}
         <div class="relative w-64">
             <x-input type="text" placeholder="Search..." wire:model.live="searchQuery" />
@@ -14,8 +14,9 @@
                 <tr>
                     <th scope="col" class="py-3 px-6">ID</th>
                     <th scope="col" class="py-3 px-6">Name</th>
-                    <th scope="col" class="py-3 px-6">Order</th>
                     <th scope="col" class="py-3 px-6">Product type</th>
+                    <th scope="col" class="py-3 px-6">Order</th>
+                    <th scope="col" class="py-3 px-6">Status</th>
                     <th scope="col" class="py-3 px-6">Actions</th>
                 </tr>
             </thead>
@@ -31,10 +32,18 @@
                             {{ Str::words($section->name, 5, '...') }}
                         </td>
                         <td class="p-1">
-                            {{ $section->productType?->name }}
+                            {{ $section->product_type?->name }}
                         </td>
                         <td class="p-1">
                             {{ $section->order }}
+                        </td>
+
+                        <td class="p-2 text-center">
+                            @if ($section->is_active == 1)
+                                <span class="px-2 py-1 text-green-500 bg-green-100 rounded-full">Active</span>
+                            @else
+                                <span class="px-2 py-1 text-red-500 bg-red-100 rounded-full">Inactive</span>
+                            @endif
                         </td>
 
                         <td class="p-2">
@@ -60,7 +69,7 @@
 
     <x-dialog-modal wire:model.live="deleteModelId">
         <x-slot name="title">
-            {{ __('Delete Post') }}
+            {{ __('Delete') }}
         </x-slot>
 
         <x-slot name="content">

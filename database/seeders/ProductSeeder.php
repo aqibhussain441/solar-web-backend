@@ -2,28 +2,26 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProductCategory;
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-
-class ProductCategorySeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $image_path = config('constants.product.category.image_path');
-        $thumbnail_path = config('constants.product.category.thumbnail_path');
+        $image_path = config('constants.product.image_path');
+        $thumbnail_path = config('constants.product.thumbnail_path');
 
         // Ensure the directories exist
         $this->ensureDirectoryExists(storage_path('app/public/' . $image_path));
         $this->ensureDirectoryExists(storage_path('app/public/' . $thumbnail_path));
 
-        ProductCategory::factory()->count(2)->create();
+        Product::factory(5)->create();
     }
 
     /**
